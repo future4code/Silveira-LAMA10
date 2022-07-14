@@ -16,8 +16,8 @@ export default class UserBusiness {
     async createUser(user: UserInputDTO) {
 
         try {
-            const { name, email, password, role } = user;
-            if (!name || !email || !password || !role) {
+            const { email, password, name, role } = user;
+            if (!email || !password || !name || !role) {
                 throw new Error(" Fill up all the fields 'name', 'email', 'password' and 'role' ");
             }
             if (email.indexOf("@") === -1) {

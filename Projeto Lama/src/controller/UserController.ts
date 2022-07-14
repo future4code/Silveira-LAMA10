@@ -4,12 +4,12 @@ import { BaseDatabase } from "../data/BaseDatabase";
 import UserBusiness from "../business/UserBusiness";
 
 export class UserController {
+
     constructor(
         private userBusiness: UserBusiness
     ) { }
 
     async signup(req: Request, res: Response) {
-
         try {
 
             const input: UserInputDTO = {
