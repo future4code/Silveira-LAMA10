@@ -1,0 +1,23 @@
+### Cadastro de usuario
+POST http://localhost:3003/user/signup
+Content-Type: application/json
+
+{   
+    "name": "Diego Lima", 
+    "email":"diego.lima@email.com",
+    "password":"123456",
+    "role": "NORMAL"   
+}
+
+### Login do usuário
+# @name login
+POST http://localhost:3003/user/login
+Content-Type: application/json
+
+{
+    "email":"diego.lima@email.com",
+    "password":"DlSdas@!125ds5"
+}
+
+
+
