@@ -60,8 +60,7 @@ export default class BandBusiness {
             const band = await this.bandDatabase.getBandByNameOrId(name,id)
             
             if(!band){
-                throw new Error("Não foi possivel encontrar a banda");
-                
+                throw new Error("Não foi possivel encontrar a banda");                
             }
 
             return band

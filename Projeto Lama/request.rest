@@ -38,6 +38,6 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMxYzYxYTU2LWZhY2Et
 Content-Type: application/json
 
 {
-    "id":"12121212",
-    "name":""
+    "id":"",
+    "name":"LALSas"
 }
