@@ -3,10 +3,10 @@ POST http://localhost:3003/user/signup
 Content-Type: application/json
 
 {   
-    "name": "Diego Lima", 
-    "email":"diego.lima@email.com",
+    "name": "Chris", 
+    "email":"chris@email.com",
     "password":"123456",
-    "role": "NORMAL"   
+    "role": "ADMIN"   
 }
 
 ### Login do usuário
@@ -15,9 +15,23 @@ POST http://localhost:3003/user/login
 Content-Type: application/json
 
 {
-    "email":"diego.lima@email.com",
-    "password":"DlSdas@!125ds5"
+    "email":"chris@email.com",
+    "password":"123456"
 }
 
+### Registar banda no evento
 
+POST http://localhost:3003/band/register
+Authorization: {{login.response.body.token}}
+Content-Type: application/json
+
+{
+    "name": "LALSas",
+    "genre": "Teste",
+    "responsible": "normal"
+}
+
+### Pega informações da Banda por ID ou Name
+
+GET http://localhost:3003/band/a6b11efa-6005-4ae9-94b3-b49fba8bc4f5
 

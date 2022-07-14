@@ -1,7 +1,8 @@
 import knex from "knex";
 import Knex   from "knex";
+import dotenv from "dotenv";
 
-
+dotenv.config()
 export abstract class BaseDatabase {
 
     private static connection: Knex | null = null;
@@ -15,7 +16,7 @@ export abstract class BaseDatabase {
                   port: 3306,
                   user: process.env.DB_USER,
                   password: process.env.DB_PASSWORD,
-                  database: process.env.DB_DATABASE_NAME,
+                  database: process.env.DB_SCHEMA,
                 },
               });        
         }

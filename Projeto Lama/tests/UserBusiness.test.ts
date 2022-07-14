@@ -1,6 +1,4 @@
-import { UserBusiness } from "../src/business/UserBusiness"
-import { UserDatabase } from "../src/data/UserDatabase"
-import Authenticator from "../src/services/Authenticator"
+import UserBusiness from "../src/business/UserBusiness"
 import { HashMockGenerator } from "./mocks/hashGeneratorMock"
 import { IdGeneratorMock } from "./mocks/idGeneratorMock"
 import { TokenGeneratorMock } from "./mocks/tokenGeneratorMock"
