@@ -1,28 +1,29 @@
 import { Request, Response } from "express";
-import { UserInputDTO, LoginInputDTO } from "../model/User";
+import BandBusiness from "../business/BandBusiness";
 import { BaseDatabase } from "../data/BaseDatabase";
-import UserBusiness from "../business/UserBusiness";
+import { BandInputDTO } from "../model/Band";
 
-export class UserController {
+
+
+export class BandController {
 
     constructor(
-        private userBusiness: UserBusiness
+        private bandBusiness: BandBusiness
     ) { }
 
-    public signup = async (req: Request, res: Response) => {
+    public bandRegister = async (req: Request, res: Response) => {
         try {
-
-            const { email, name, password, role } = req.body
-            const input: UserInputDTO = {
-                email,
+            const token: string = req.headers.authorization as string
+            const { name, genre, responsible } = req.body
+            const input: BandInputDTO = {
                 name,
-                password,
-                role
+                genre,
+                responsible
             }
-            
-            const token = await this.userBusiness.createUser(input);
 
-            res.status(201).send({ token });
+            await this.bandBusiness.registerBand(input, token);
+
+            res.status(200).send({ message: "Banda registrada com sucesso" });
 
         } catch (error: any) {
             if (res.statusCode === 200) {
@@ -35,18 +36,16 @@ export class UserController {
         }
     }
 
-   public login = async(req: Request, res: Response) => {
+    public getBand = async (req: Request, res: Response) => {
 
         try {
-            const loginData: LoginInputDTO = {
-                email: req.body.email,
-                password: req.body.password
-            };
+
+            const { id, name } = req.params
+
+            const band = await this.bandBusiness.getBand(id,name)
 
 
-            const token = await this.userBusiness.login(loginData);
-
-            res.status(200).send({ token });
+            res.status(200).send({ band });
 
         } catch (error: any) {
             if (res.statusCode === 200) {
@@ -60,4 +59,3 @@ export class UserController {
     }
 
 }
-// export default new UserController()

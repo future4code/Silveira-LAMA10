@@ -1,4 +1,4 @@
-import { UserInputDTO, LoginInputDTO } from "../model/User";
+import { UserInputDTO, LoginInputDTO, User } from "../model/User";
 import { UserDatabase } from "../data/UserDatabase";
 import IdGenerator from "../services/IdGenerator";
 import HashManager from "../services/HashManager";
@@ -13,8 +13,8 @@ export default class UserBusiness {
         private idGeneratator: IdGenerator
     ) { }
 
-    async createUser(user: UserInputDTO) {
-
+    public createUser = async (user:UserInputDTO) => {
+        console.log(user)
         try {
             const { email, password, name, role } = user;
             if (!email || !password || !name || !role) {
@@ -34,11 +34,13 @@ export default class UserBusiness {
 
             const id = this.idGeneratator.generate();
 
-            const hashPassword = await this.hashManager.hash(user.password);
+            const hashPassword = await this.hashManager.hash(password);
 
-            await this.userDatabase.createUser(id, user.email, user.name, hashPassword, user.role);
+            const newUser = new User(id, name, email, hashPassword, User.stringToUserRole(role))
 
-            const accessToken = this.authenticator.generateToken({ id, role: user.role });
+            await this.userDatabase.createUser(newUser);
+
+            const accessToken = this.authenticator.generateToken({ id, role });
 
             return accessToken;
 
@@ -47,7 +49,7 @@ export default class UserBusiness {
         }
     }
 
-    async login(user: LoginInputDTO) {
+    public login = async (user: LoginInputDTO) => {
 
         try {
             const { email, password } = user
@@ -69,8 +71,6 @@ export default class UserBusiness {
             }
 
             const accessToken = this.authenticator.generateToken({ id: userFromDB.getId(), role: userFromDB.getRole() });
-
-
 
             return accessToken;
 
