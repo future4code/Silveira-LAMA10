@@ -12,7 +12,7 @@ export default class BandBusiness {
     ) { }
 
     public registerBand = async (band: BandInputDTO, token: string) => {
-        
+
         try {
             const { name, genre, responsible } = band;
             if (!name || !genre || !responsible) {
@@ -46,17 +46,25 @@ export default class BandBusiness {
             throw new Error(error.message);
         }
     }
-    public getBand = async (name?: string, id?: string) => {
+    public getBand = async (token: string, name: string, id: string) => {
         try {
+            if (!token) {
+                throw new Error("Insira um token através do headers")
+            }
+            const tokenData = this.authenticator.getData(token)
 
-            if(name){
-                const band = await this.bandDatabase.getBandByNameOrId(name)
-                return band
+            if (!tokenData) {
+                throw new Error("Token invalid")
             }
-            if(id){
-                const band = await this.bandDatabase.getBandByNameOrId(id)
-                return band  
+            
+            const band = await this.bandDatabase.getBandByNameOrId(name,id)
+            
+            if(!band){
+                throw new Error("Não foi possivel encontrar a banda");
+                
             }
+
+            return band
 
         } catch (error: any) {
             throw new Error(error.message);
