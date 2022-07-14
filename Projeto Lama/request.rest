@@ -33,5 +33,11 @@ Content-Type: application/json
 
 ### Pega informações da Banda por ID ou Name
 
-GET http://localhost:3003/band/a6b11efa-6005-4ae9-94b3-b49fba8bc4f5
+GET http://localhost:3003/band/getband
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMxYzYxYTU2LWZhY2EtNGZmMS05OWM3LTBjMmUyZmQ4OTExOSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY1NzgyOTYzMCwiZXhwIjoxNjU3ODQwNDMwfQ.NuK3allWwzzEtySlnP6CZnVvnDqT6Y1OPY-Lk83hzjM
+Content-Type: application/json
 
+{
+    "id":"",
+    "name":"LALSas"
+}

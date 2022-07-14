@@ -37,12 +37,12 @@ export class BandController {
     }
 
     public getBand = async (req: Request, res: Response) => {
-
+        
         try {
-
-            const { id, name } = req.params
-
-            const band = await this.bandBusiness.getBand(id,name)
+            const token: string = req.headers.authorization as string
+            const { id, name } = req.body
+            
+            const band = await this.bandBusiness.getBand(token,name,id)
 
 
             res.status(200).send({ band });
