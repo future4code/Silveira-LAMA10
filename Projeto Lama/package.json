@@ -5,7 +5,7 @@
    "main": "index.js",
    "scripts": {
       "test": "clear && echo \"Running tests...\" && jest",
-      "start": "tsc && node --inspect ./build/src/index.js",
+      "start": "tsc && node ./build/src/index.js",
       "dev": " ts-node-dev ./src/index.ts"
    },
    "author": "Labenu",

@@ -1,5 +1,5 @@
 import express from "express";
-import { UserBusiness } from "../../business/UserBusiness";
+import UserBusiness from "../../business/UserBusiness";
 import { UserDatabase } from "../../data/UserDatabase";
 import Authenticator from "../../services/Authenticator";
 import HashManager from "../../services/HashManager";
