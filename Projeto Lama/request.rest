@@ -3,8 +3,8 @@ POST http://localhost:3003/user/signup
 Content-Type: application/json
 
 {   
-    "name": "Chris", 
-    "email":"chris@email.com",
+    "name": "Diego", 
+    "email":"diego@email.com",
     "password":"123456",
     "role": "ADMIN"   
 }
@@ -15,7 +15,7 @@ POST http://localhost:3003/user/login
 Content-Type: application/json
 
 {
-    "email":"chris@email.com",
+    "email":"diego@email.com",
     "password":"123456"
 }
 
@@ -26,9 +26,9 @@ Authorization: {{login.response.body.token}}
 Content-Type: application/json
 
 {
-    "name": "System of a Down",
+    "name": "Bon Jovi",
     "genre": "Rock",
-    "responsible": "Serj Tankian"
+    "responsible": "Bon Jovi"
 }
 
 ### Pega informações da Banda por ID ou Name
@@ -39,25 +39,25 @@ Content-Type: application/json
 
 {
     "id":"",
-    "name":"System of a Down"
+    "name":"Bon Jovi"
 }
-
-### Registar show no evento
-POST http://localhost:3003/show/addshow
+###
+POST http://localhost:3003/show/register
 Authorization: {{login.response.body.token}}
 Content-Type: application/json
 
 {
-    "weekDay": "Saturday",
-    "startTime": 08,
+    "weekDay": "Friday",
+    "startTime": 20,
     "endTime": 23,
-    "bandId": "eb3c75d1-d397-4415-a780-621b815a6b9d"
+    "bandId":"eb3c75d1-d397-4415-a780-621b815a6b9d"
 }
 
-### Pegar shows do dia
+###
 GET http://localhost:3003/show/getshow
 Content-Type: application/json
 
 {
-    "day":"Saturday"    
+    "day":"Sunday"
+    
 }

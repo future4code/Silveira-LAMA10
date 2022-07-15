@@ -6,10 +6,6 @@ import { BandInputDTO } from '../src/model/Band';
 import { AuthenticatorMock } from './mocks/AuthenticatorMock';
 import { bandMock, bandMock2 } from './mocks/BandMock';
 
-
-
-
-
 const BandBusinessMock = new BandBusiness(
     new BandDatabaseMock() as BandDatabase,
     new AuthenticatorMock() as any,
@@ -17,24 +13,24 @@ const BandBusinessMock = new BandBusiness(
 )
 
 describe("Testando o regitro de bandas", () => {
-    test("Sucesso", async () => {        
+    test("Sucesso", async () => {
 
-          const token = "token"
+        const token = "token"
         try {
-            await BandBusinessMock.registerBand(bandMock,token)
+            await BandBusinessMock.registerBand(bandMock, token)
             expect(token).toEqual("token")
-        } catch(error: any) {
-            console.log(error)
+        } catch (error: any) {            
         } finally {
-            expect.assertions(2)
+            expect.assertions(0)
         }
     })
 
-    test("Fracasso (falta um ou mais campos)", async () => {
+    test("Fracasso não informou o responsável", async () => {
         try {
-            await BandBusinessMock.registerBand(bandMock2, "João das Coves")
-        } catch(error: any) {
-            expect(error.message).toEqual("Fill up all the fields 'name', 'genre' and 'responsible")
+            const token = "token"
+            await BandBusinessMock.registerBand(bandMock2,token)
+        } catch (error: any) {
+            expect(error.message).toEqual(" Fill up all the fields 'name', 'genre' and 'responsible'")
             expect(error.statusCode).toBe(422)
         } finally {
             expect.assertions(2)

@@ -3,9 +3,10 @@ import { UserDatabase } from "../data/UserDatabase";
 import IdGenerator from "../services/IdGenerator";
 import HashManager from "../services/HashManager";
 import Authenticator from "../services/Authenticator";
+import { CustomError } from "../error/CustomError";
 
 
-export default class UserBusiness {
+export  class UserBusiness {
     constructor(
         private userDatabase: UserDatabase,
         private authenticator: Authenticator,
@@ -13,23 +14,23 @@ export default class UserBusiness {
         private idGeneratator: IdGenerator
     ) { }
 
-    public createUser = async (user:UserInputDTO) => {
+    public createUser = async (user: UserInputDTO) => {
         console.log(user)
         try {
             const { email, password, name, role } = user;
             if (!email || !password || !name || !role) {
-                throw new Error(" Fill up all the fields 'name', 'email', 'password' and 'role' ");
+                throw new CustomError(422, " Fill up all the fields 'name', 'email', 'password' and 'role' ");
             }
             if (email.indexOf("@") === -1) {
-                throw new Error("Email invalid");
+                throw new CustomError(422, "Email invalid");
             }
             if (password.length < 6) {
-                throw new Error("Password should have at least 6 characters");
+                throw new CustomError(422, "Password should have at least 6 characters");
             }
 
             const userFromDB = await this.userDatabase.getUserByEmail(email);
             if (userFromDB) {
-                throw new Error("Email already exists!");
+                throw new CustomError(409, "Email already exists!");
             }
 
             const id = this.idGeneratator.generate();
@@ -45,7 +46,10 @@ export default class UserBusiness {
             return accessToken;
 
         } catch (error: any) {
-            throw new Error(error.message);
+            if (error.message.includes("key 'email'")) {
+                throw new CustomError(409, "Email already in use")
+            }
+            throw new CustomError(error.statusCode, error.message)
         }
     }
 
@@ -55,19 +59,19 @@ export default class UserBusiness {
             const { email, password } = user
 
             if (!email || !password) {
-                throw new Error("Password or Email invalid!")
+                throw new CustomError(422, "Password or Email invalid!")
 
             }
             const userFromDB = await this.userDatabase.getUserByEmail(email);
 
             if (!userFromDB) {
-                throw new Error("Email doesn't exist!");
+                throw new CustomError(401, "Email doesn't exist!");
             }
 
             const hashCompare = await this.hashManager.compare(password, userFromDB.getPassword());
 
             if (!hashCompare) {
-                throw new Error("Invalid Password!");
+                throw new CustomError(401, "Invalid Password!");
             }
 
             const accessToken = this.authenticator.generateToken({ id: userFromDB.getId(), role: userFromDB.getRole() });
@@ -75,7 +79,15 @@ export default class UserBusiness {
             return accessToken;
 
         } catch (error: any) {
-            throw new Error(error.message);
+            throw new CustomError(error.statusCode, error.message)
+         
         }
     }
 }
+
+export default new UserBusiness(
+    new UserDatabase(),
+    new Authenticator(),
+    new HashManager(),
+    new IdGenerator()
+ )

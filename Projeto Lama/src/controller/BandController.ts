@@ -1,17 +1,11 @@
 import { Request, Response } from "express";
-import BandBusiness from "../business/BandBusiness";
+import bandBusiness from "../business/BandBusiness";
 import { BaseDatabase } from "../data/BaseDatabase";
 import { BandInputDTO } from "../model/Band";
 
-
-
 export class BandController {
 
-    constructor(
-        private bandBusiness: BandBusiness
-    ) { }
-
-    public bandRegister = async (req: Request, res: Response) => {
+     public bandRegister = async (req: Request, res: Response) => {
         try {
             const token: string = req.headers.authorization as string
             const { name, genre, responsible } = req.body
@@ -21,7 +15,7 @@ export class BandController {
                 responsible
             }
 
-            await this.bandBusiness.registerBand(input, token);
+            await bandBusiness.registerBand(input, token);
 
             res.status(201).send({ message: "Banda registrada com sucesso" });
 
@@ -42,7 +36,7 @@ export class BandController {
             const token: string = req.headers.authorization as string
             const { id, name } = req.body
             
-            const band = await this.bandBusiness.getBand(token,name,id)
+            const band = await bandBusiness.getBand(token,name,id)
 
 
             res.status(200).send({ band });
@@ -59,3 +53,5 @@ export class BandController {
     }
 
 }
+
+export default new BandController()
