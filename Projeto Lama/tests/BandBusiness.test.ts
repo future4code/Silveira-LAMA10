@@ -1,21 +1,27 @@
 import { BandDatabase } from './../src/data/BandDatabase';
 import { IdGeneratorMock } from './mocks/idGeneratorMock';
 import BandBusiness from "../src/business/BandBusiness"
+import { BandDatabaseMock } from './mocks/BandDatabaseMock';
+import { BandInputDTO } from '../src/model/Band';
+import { AuthenticatorMock } from './mocks/AuthenticatorMock';
+import { bandMock, bandMock2 } from './mocks/BandMock';
 
-// let AuthenticatorMock =  {
-//     generateToken: jest.fn((data:any)=> "token"),
-// } as any
 
-// const BandBusinessMock = new BandBusiness(
-//     new BandDatabasebaseMock() as BandDatabase,
-//     new AuthenticatorMock(),
-//     new IdGeneratorMock()
-// )
+
+
+
+const BandBusinessMock = new BandBusiness(
+    new BandDatabaseMock() as BandDatabase,
+    new AuthenticatorMock() as any,
+    new IdGeneratorMock()
+)
 
 describe("Testando o regitro de bandas", () => {
-    test("Sucesso", async () => {
+    test("Sucesso", async () => {        
+
+          const token = "token"
         try {
-            await BandBusiness.registerBand("Labebanda", "Psicodélico", "123456", "João das Coves")
+            await BandBusinessMock.registerBand(bandMock,token)
             expect(token).toEqual("token")
         } catch(error: any) {
             console.log(error)
@@ -26,7 +32,7 @@ describe("Testando o regitro de bandas", () => {
 
     test("Fracasso (falta um ou mais campos)", async () => {
         try {
-            await BandBusiness.registerBand("Labebanda", "", "João das Coves")
+            await BandBusinessMock.registerBand(bandMock2, "João das Coves")
         } catch(error: any) {
             expect(error.message).toEqual("Fill up all the fields 'name', 'genre' and 'responsible")
             expect(error.statusCode).toBe(422)
