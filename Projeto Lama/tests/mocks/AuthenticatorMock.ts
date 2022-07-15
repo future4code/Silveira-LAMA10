@@ -7,7 +7,7 @@ import { UserRole} from "../../src/model/User"
   }
 
 
-export class TokenGeneratorMock {
+export class AuthenticatorMock {
     public generate = (input: AuthenticationData): string => {
         return "token"
     }

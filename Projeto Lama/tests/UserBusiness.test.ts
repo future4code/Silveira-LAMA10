@@ -1,17 +1,17 @@
 import UserBusiness from "../src/business/UserBusiness"
 import { HashMockGenerator } from "./mocks/hashGeneratorMock"
 import { IdGeneratorMock } from "./mocks/idGeneratorMock"
-import { TokenGeneratorMock } from "./mocks/tokenGeneratorMock"
-import { UserDatabaseMock } from "./mocks/userDatabaseMock"
+// import { TokenGeneratorMock } from "./mocks/AuthenticatorMock"
+// import { UserDatabaseMock } from "./mocks/userDatabaseMock"
 
 
-const userBusinessMock = new UserBusiness(
-    new UserDatabaseMock() as any,
-    new TokenGeneratorMock() as any,
-    new HashMockGenerator() as any,
-    new IdGeneratorMock()
+// const userBusinessMock = new UserBusiness(
+//     new UserDatabaseMock() as any,
+//     new TokenGeneratorMock() as any,
+//     new HashMockGenerator() as any,
+//     new IdGeneratorMock()
     
-)
+// )
 
 
 describe("Testando o UserBusiness", () => {

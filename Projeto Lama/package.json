@@ -5,9 +5,13 @@
    "main": "index.js",
    "scripts": {
       "test": "clear && echo \"Running tests...\" && jest",
-      "start": "tsc && node ./build/src/index.js",
-      "dev": " ts-node-dev ./src/index.ts"
+      "start": "node ./build/src/index.js",
+      "dev": " ts-node-dev ./src/index.ts",
+      "postinstall": "tsc"
    },
+   "engines": {
+      "node":"v16.16.0"
+   },   
    "author": "Labenu",
    "license": "ISC",
    "dependencies": {
