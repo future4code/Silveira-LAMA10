@@ -11,7 +11,7 @@ export const bandMock: BandInputDTO = {
 }
 
 export const bandMock2: BandInputDTO = {
-    name,
-    genre,
-    responsible
+    name: "Laband",
+    genre: "pagode",
+    responsible:""
 }

@@ -1,13 +1,11 @@
 import { Request, Response } from "express";
 import { UserInputDTO, LoginInputDTO } from "../model/User";
 import { BaseDatabase } from "../data/BaseDatabase";
-import UserBusiness from "../business/UserBusiness";
+import userBusiness from "../business/UserBusiness";
+
 
 export class UserController {
 
-    constructor(
-        private userBusiness: UserBusiness
-    ) { }
 
     public signup = async (req: Request, res: Response) => {
         try {
@@ -19,23 +17,21 @@ export class UserController {
                 password,
                 role
             }
-            
-            const token = await this.userBusiness.createUser(input);
+
+            const token = await userBusiness.createUser(input);
 
             res.status(201).send({ token });
 
         } catch (error: any) {
-            if (res.statusCode === 200) {
-                res.status(500).send({ message: error.message })
-            } else {
-                res.status(res.statusCode).send({ message: error.sqlMessage || error.message })
-            }
+            const { statusCode, message } = error
+            res.status(statusCode || 400).send({ message });
+
         } finally {
             await BaseDatabase.destroyConnection();
         }
     }
 
-   public login = async(req: Request, res: Response) => {
+    public login = async (req: Request, res: Response) => {
 
         try {
             const loginData: LoginInputDTO = {
@@ -44,7 +40,7 @@ export class UserController {
             };
 
 
-            const token = await this.userBusiness.login(loginData);
+            const token = await userBusiness.login(loginData);
 
             res.status(200).send({ token });
 
@@ -60,4 +56,4 @@ export class UserController {
     }
 
 }
-// export default new UserController()
+export default new UserController()

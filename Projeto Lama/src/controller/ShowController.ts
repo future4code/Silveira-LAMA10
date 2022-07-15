@@ -1,13 +1,9 @@
 import { Request, Response } from "express";
-import ShowBusiness from "../business/ShowBusiness";
+import showBusiness from "../business/ShowBusiness";
 import { BaseDatabase } from "../data/BaseDatabase";
 import { ShowInputDTO } from "../model/Show";
 
 export class ShowController {
-
-    constructor(
-        private showBusiness: ShowBusiness
-    ) { }
 
     public registerShow = async (req: Request, res: Response) => {
         try {
@@ -20,7 +16,7 @@ export class ShowController {
                 bandId
             }
 
-            await this.showBusiness.addShow(input, token);
+            await showBusiness.addShow(input, token);
 
             res.status(201).send({ message: "Show cadastrado com sucesso", input });
 
@@ -41,7 +37,7 @@ export class ShowController {
 
             const day = req.body.day
 
-            const shows = await this.showBusiness.getAllShows(day)
+            const shows = await showBusiness.getAllShows(day)
             
             res.status(200).send({ shows });
 
@@ -57,3 +53,4 @@ export class ShowController {
     }
 
 }
+export default new ShowController()
