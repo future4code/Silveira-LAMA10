@@ -26,18 +26,38 @@ Authorization: {{login.response.body.token}}
 Content-Type: application/json
 
 {
-    "name": "LALSas",
-    "genre": "Teste",
-    "responsible": "normal"
+    "name": "System of a Down",
+    "genre": "Rock",
+    "responsible": "Serj Tankian"
 }
 
 ### Pega informações da Banda por ID ou Name
 
 GET http://localhost:3003/band/getband
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMxYzYxYTU2LWZhY2EtNGZmMS05OWM3LTBjMmUyZmQ4OTExOSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY1NzgyOTYzMCwiZXhwIjoxNjU3ODQwNDMwfQ.NuK3allWwzzEtySlnP6CZnVvnDqT6Y1OPY-Lk83hzjM
+Authorization: {{login.response.body.token}}
 Content-Type: application/json
 
 {
     "id":"",
-    "name":"LALSas"
+    "name":"System of a Down"
+}
+
+### Registar show no evento
+POST http://localhost:3003/show/addshow
+Authorization: {{login.response.body.token}}
+Content-Type: application/json
+
+{
+    "weekDay": "Saturday",
+    "startTime": 08,
+    "endTime": 23,
+    "bandId": "eb3c75d1-d397-4415-a780-621b815a6b9d"
+}
+
+### Pegar shows do dia
+GET http://localhost:3003/show/getshow
+Content-Type: application/json
+
+{
+    "day":"Saturday"    
 }

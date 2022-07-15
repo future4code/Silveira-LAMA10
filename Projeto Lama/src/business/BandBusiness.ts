@@ -12,8 +12,9 @@ export default class BandBusiness {
     ) { }
 
     public registerBand = async (band: BandInputDTO, token: string) => {
-
+        
         try {
+            const  idVazio:string = ""
             const { name, genre, responsible } = band;
             if (!name || !genre || !responsible) {
                 throw new Error(" Fill up all the fields 'name', 'genre' and 'responsible'");
@@ -30,7 +31,7 @@ export default class BandBusiness {
                 throw new Error("Your credentials are not valid for this task");
 
             }
-            const bandFromDB = await this.bandDatabase.getBandByNameOrId(name);
+            const bandFromDB = await this.bandDatabase.getBandByNameOrId(name, idVazio);
             if (bandFromDB) {
                 throw new Error("Band already exists!");
             }

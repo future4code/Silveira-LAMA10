@@ -1,29 +1,28 @@
 import { Request, Response } from "express";
-import BandBusiness from "../business/BandBusiness";
+import ShowBusiness from "../business/ShowBusiness";
 import { BaseDatabase } from "../data/BaseDatabase";
-import { BandInputDTO } from "../model/Band";
+import { ShowInputDTO } from "../model/Show";
 
-
-
-export class BandController {
+export class ShowController {
 
     constructor(
-        private bandBusiness: BandBusiness
+        private showBusiness: ShowBusiness
     ) { }
 
-    public bandRegister = async (req: Request, res: Response) => {
+    public registerShow = async (req: Request, res: Response) => {
         try {
             const token: string = req.headers.authorization as string
-            const { name, genre, responsible } = req.body
-            const input: BandInputDTO = {
-                name,
-                genre,
-                responsible
+            const { weekDay, startTime, endTime, bandId } = req.body
+            const input: ShowInputDTO = {
+                weekDay,
+                startTime,
+                endTime,
+                bandId
             }
 
-            await this.bandBusiness.registerBand(input, token);
+            await this.showBusiness.addShow(input, token);
 
-            res.status(201).send({ message: "Banda registrada com sucesso" });
+            res.status(201).send({ message: "Show cadastrado com sucesso", input });
 
         } catch (error: any) {
             if (res.statusCode === 200) {
@@ -36,16 +35,15 @@ export class BandController {
         }
     }
 
-    public getBand = async (req: Request, res: Response) => {
-        
+    public getAllShowsOfDay = async (req: Request, res: Response) => {
+
         try {
-            const token: string = req.headers.authorization as string
-            const { id, name } = req.body
+
+            const day = req.body.day
+
+            const shows = await this.showBusiness.getAllShows(day)
             
-            const band = await this.bandBusiness.getBand(token,name,id)
-
-
-            res.status(200).send({ band });
+            res.status(200).send({ shows });
 
         } catch (error: any) {
             if (res.statusCode === 200) {
