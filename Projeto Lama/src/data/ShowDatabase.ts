@@ -24,7 +24,7 @@ export class ShowDatabase extends BaseDatabase {
     }
   }
 
-  getShowFromDay = async (day: string): Promise<any[]> => {
+  getShowFromDay = async (day: string): Promise<Show[]> => {
     try {
       const result = await this.getConnection()
         .select("*")
