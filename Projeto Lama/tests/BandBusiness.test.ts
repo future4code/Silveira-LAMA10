@@ -1,10 +1,10 @@
 import { BandDatabase } from './../src/data/BandDatabase';
 import { IdGeneratorMock } from './mocks/idGeneratorMock';
-import BandBusiness from "../src/business/BandBusiness"
 import { BandDatabaseMock } from './mocks/BandDatabaseMock';
-import { BandInputDTO } from '../src/model/Band';
 import { AuthenticatorMock } from './mocks/AuthenticatorMock';
 import { bandMock, bandMock2 } from './mocks/BandMock';
+import { BandBusiness } from '../src/business/BandBusiness';
+
 
 const BandBusinessMock = new BandBusiness(
     new BandDatabaseMock() as BandDatabase,

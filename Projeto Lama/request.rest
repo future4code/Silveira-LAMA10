@@ -58,6 +58,6 @@ GET http://localhost:3003/show/getshow
 Content-Type: application/json
 
 {
-    "day":"Sunday"
+    "day":"Friday"
     
 }

@@ -15,7 +15,7 @@ export  class UserBusiness {
     ) { }
 
     public createUser = async (user: UserInputDTO) => {
-        console.log(user)
+        
         try {
             const { email, password, name, role } = user;
             if (!email || !password || !name || !role) {

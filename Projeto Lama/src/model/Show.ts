@@ -1,3 +1,5 @@
+import { CustomError } from "../error/CustomError"
+
 export class Show {
     constructor(
         private id: string,
@@ -17,21 +19,23 @@ export class Show {
     static toShowModel(show: any) {
         return new Show(show.id, show.weekDay, show.startTime, show.endTime, show.bandId);
     }
-    // static numberToDateValid(startTime: number, endTime:number ):string {
-    //     switch (startTime ) {
-    //         case startTime <08 :
-    //             return ;
-    //         case "ADMIN":
-    //             return ;
-    //         default:
-    //             throw new Error("Invalid user role");
-    //     }
-    // }
+    static stringToDateValid(input: string): string {
+        switch (input) {
+            case "Friday":
+                return "valid";
+            case "Saturday":
+                return "valid";
+            case "Sunday":
+                return "valid";
+            default:
+                throw new CustomError(409,"Enter a valid day, 'Friday', 'Saturday' or 'Sunday'");
+        }
+    }
 }
 
 export interface ShowInputDTO {
     weekDay: string,
     startTime: number,
-    endTime:number,
-    bandId:string    
+    endTime: number,
+    bandId: string
 }
