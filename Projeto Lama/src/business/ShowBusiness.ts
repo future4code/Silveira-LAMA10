@@ -33,7 +33,7 @@ export class ShowBusiness {
             if (tokenData.role !== "ADMIN") {
                 throw new CustomError(401, "Your credentials are not valid for this task");
             }
-            
+
             if (startTime < 8) {
                 throw new Error("Invalid start time")
             }
@@ -48,10 +48,11 @@ export class ShowBusiness {
             }
 
             const showFromDB = await this.showDatabase.getShowFromDay(weekDay)
+            console.log(showFromDB)
 
             const validateDay = showFromDB.filter((show: any) =>
-                (show.start_time <= startTime && show.end_time > startTime))
-            if (validateDay) {
+                show.start_time <= startTime && show.end_time > startTime)
+            if (validateDay.length > 0) {
                 throw new CustomError(409, "Show already registered on this date and time!");
 
             }
